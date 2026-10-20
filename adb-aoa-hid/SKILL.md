@@ -83,6 +83,17 @@ power-cycle the hub port (equivalent to unplugging), wait for re-enumeration, th
   `shell`. Android 10 has no wireless-debugging pairing. After a reboot, USB is already
   authorized: plug in and re-run `adb tcpip 5555`.
 
+## Safety
+
+- Only run this on hardware you own or are explicitly authorized to service. HID injection is
+  equivalent to typing on the device — it can unlock, tap through prompts and approve anything,
+  not just the debugging dialog.
+- Ticking "always allow" writes the host key into `/data/misc/adb/adb_keys` **permanently**.
+  On a phone whose screen is dead it cannot be revoked from the device.
+- `adb tcpip 5555` exposes the phone to every host on the LAN; any of them can trigger the
+  dialog and, if approved, become permanently trusted. Close it with `adb usb` when done.
+- Unplugging the cable leaves accessory mode and returns the phone to normal USB behaviour.
+
 ## Reference
 
 Protocol tables, descriptor hex dumps, dialog coordinates, ADB header format and the
